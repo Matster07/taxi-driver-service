@@ -4,7 +4,7 @@ server:
         context-path: /api/driver/v1
 spring:
     datasource:
-        url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
+        url: ${DB_URL:jdbc:postgresql://localhost:30829/postgres}
         driverClassName: org.postgresql.Driver
         username: ${POSTGRES_USER:admin}
         password: ${POSTGRES_PASSWORD:admin}

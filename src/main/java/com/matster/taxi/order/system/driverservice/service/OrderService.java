@@ -1,6 +1,5 @@
 package com.matster.taxi.order.system.driverservice.service;
 
-import com.matster.taxi.order.system.driverservice.enums.OrderStatus;
 import com.matster.taxi.order.system.driverservice.exception.OrderStatusException;
 import com.matster.taxi.order.system.driverservice.exception.OrdersNotFoundException;
 import com.matster.taxi.order.system.driverservice.model.OrderResponse;
@@ -27,16 +26,26 @@ public class OrderService {
 
     public List<OrderResponse> getOrders() {
         ResponseEntity<OrderResponse[]> response = restTemplate
-                .getForEntity("http://" + orderServiceAddress + "/api/order/v1/orders", OrderResponse[].class);
+                .getForEntity(
+                            "http://" +
+                                orderServiceAddress +
+                                "/api/order/v1/orders",
+                        OrderResponse[].class);
 
         Optional<OrderResponse[]> orders = Optional.ofNullable(response.getBody());
 
         return Arrays.asList(orders.orElseThrow(() -> new OrdersNotFoundException("An error occurred during getting orders")));
     }
 
-    public OrderResponse    updateOrder(Long id, UpdateOrderRequest updateOrderReq) {
+    public OrderResponse updateOrder(Long id, UpdateOrderRequest updateOrderReq) {
         ResponseEntity<OrderResponse> response = restTemplate
-                .postForEntity("http://localhost:8093/api/order/v1/orders/" + id + "/status", updateOrderReq, OrderResponse.class);
+                .postForEntity(
+                            "http://" +
+                                orderServiceAddress +
+                                "/api/order/v1/orders/" +
+                                id +
+                                "/status",
+                        updateOrderReq, OrderResponse.class);
 
         Optional<OrderResponse> body = Optional.ofNullable(response.getBody());
 
