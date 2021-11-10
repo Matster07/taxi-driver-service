@@ -7,6 +7,7 @@ import com.matster.taxi.order.system.driverservice.model.OrderResponse;
 import com.matster.taxi.order.system.driverservice.model.UpdateOrderRequest;
 import lombok.AllArgsConstructor;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,11 +20,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class OrderService {
 
+    @Value(value = "${app.integration.order-service-address}")
+    private String orderServiceAddress;
+
     private final RestTemplate restTemplate;
 
     public List<OrderResponse> getOrders() {
         ResponseEntity<OrderResponse[]> response = restTemplate
-                .getForEntity("http://localhost:8093/api/order/v1/orders", OrderResponse[].class);
+                .getForEntity("http://" + orderServiceAddress + "/api/order/v1/orders", OrderResponse[].class);
 
         Optional<OrderResponse[]> orders = Optional.ofNullable(response.getBody());
 
