@@ -1,0 +1,18 @@
+server:
+    port: ${PORT:8092}
+    servlet:
+        context-path: /api/driver/v1
+spring:
+    datasource:
+        url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
+        driverClassName: org.postgresql.Driver
+        username: ${POSTGRES_USER:admin}
+        password: ${POSTGRES_PASSWORD:admin}
+    jpa:
+        properties:
+            hibernate:
+                ddl-auto: update
+                generate-ddl: true
+    liquibase:
+        change-log: classpath:db.changelog/changelog-main.xml
+
